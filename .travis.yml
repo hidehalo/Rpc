@@ -1,0 +1,56 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Gist
+ @hidehalo
+ Sign out
+ Watch 71
+  Star 979
+ Fork 307 thephpleague/skeleton
+ Code  Issues 4  Pull requests 2  Projects 0  Wiki Insights 
+Branch: master Find file Copy pathskeleton/.travis.yml
+48041ad  on 26 Jan
+@philsturgeon philsturgeon Revert "Revert "Remove Composer self-updating from .travis.yml""
+18 contributors @philsturgeon @Jeroen-G @TomasVotruba @hansott @bcrowe @boekkooi @josevieirame @ravage84 @nyamsprod @EmanueleMinotto @marcqualie @pamil @mAAdhaTTah @ibrahimlawal @frankdejonge @hassankhan @colinodell @barryvdh
+RawBlameHistory     
+36 lines (28 sloc)  840 Bytes
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
+
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
+## Cache composer
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  include:
+    - php: 5.6
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+
+before_script:
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
+
+script:
+  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - |
+    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' && "$TRAVIS_PHP_VERSION" != '7.0' ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help

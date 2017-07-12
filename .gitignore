@@ -1,5 +1,5 @@
 composer.lock
 *.swp
 .DS_Store/
-.vendor/
+vendor/
 build/

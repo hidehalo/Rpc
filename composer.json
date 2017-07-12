@@ -1,0 +1,23 @@
+{
+    "name": "hidehalo/json-rpc",
+    "description": "Implements of JSON-RPC 2.0 protocol and client/server stubs",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "license": "GNUv3",
+    "authors": [
+        {
+            "name": "hidehalo",
+            "email": "tianchen_cc@yeah.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "JsonRpc\\": "src",
+            "JsonRpc\\Test": "tests"
+        }
+    },
+    "require": {}
+}
