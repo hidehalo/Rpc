@@ -16,7 +16,7 @@
     "autoload": {
         "psr-4": {
             "JsonRpc\\": "src",
-            "JsonRpc\\Test": "tests"
+            "JsonRpc\\Test\\": "tests"
         }
     },
     "require": {}

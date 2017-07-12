@@ -5,8 +5,6 @@ class Request implements RequestInterface
 {
     use MessageAwareTrait;
 
-    private $id;
-
     private $method;
 
     private $params;
