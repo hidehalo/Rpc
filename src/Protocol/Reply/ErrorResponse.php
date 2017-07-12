@@ -1,10 +1,11 @@
 <?php
+namespace JsonRpc\Protocol\Reply;
 
 use \Exception;
 
-class ErrorMessage extends Exception
+class ErrorResponse extends Exception implements MessageInterface
 {
-    use MessageAwareTrait;
+    use RepAwareTrait;
     
     private $data;
 
@@ -34,5 +35,10 @@ class ErrorMessage extends Exception
         $payload = json_encode($message, $options);
 
         return $payload;   
+    }
+
+    public function toArray()
+    {
+
     }
 }

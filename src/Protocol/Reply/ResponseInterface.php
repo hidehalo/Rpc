@@ -1,6 +1,9 @@
 <?php
+namespace JsonRpc\Protocol\Reply;
 
-interface ResponseInterface
+use JsonRpc\Protocl\MessageInterface;
+
+interface ResponseInterface extends MessageInterface
 {
-    
+        
 }

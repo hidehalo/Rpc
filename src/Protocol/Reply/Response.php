@@ -1,7 +1,10 @@
 <?php
+namespace JsonRpc\Protocol\Reply;
 
-class Message
+class Response implements MessageInterface
 {
+    use RepAwareTrait;
+    
     private $error;
 
     public function __construct($id, $result)

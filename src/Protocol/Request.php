@@ -1,43 +1,18 @@
 <?php
+namespace JsonRpc\Protocol;
 
-class Request
+class Request implements RequestInterface
 {
-    const VERSION = '2.0';
-     /**
-     * Request ID
-     *
-     * @access private
-     * @var mixed
-     */
+    use MessageAwareTrait;
+
     private $id;
 
-    /**
-     * Method name
-     *
-     * @access private
-     * @var string
-     */
     private $method;
 
-    /**
-     * Method arguments
-     *
-     * @access private
-     * @var array
-     */
     private $params;
 
-    /**
-     * Additional request attributes
-     *
-     * @access private
-     * @var array
-     */
     private $extras;
 
-   /**
-    *
-    */
     public function __construct($method, $params, $extras = [])
     {
         $this->id = uniqid(mt_rand(111,999));
@@ -46,28 +21,46 @@ class Request
         $this->extras = $extras;
     }
 
-    public function getId()
+    public function withMethod($method)
     {
-        return $this->id;
+        $this->method = $method;
+
+        return $this;
     }
 
-    public function setId($id)
+    public function withParams($params)
     {
-        $this->id = $id;
+        $this->param = $params;
+
+        return $this;
+    }
+
+    public function withExtras($extras) 
+    {
+        $this->extras = $extras;
+
+        return $this;
     }
 
     public function __toString()
     {
         $payload = array_merge_recursive($this->extras, [
-            'jsonrpc' => static::VERSION,
+            'jsonrpc' => $this->getVersion(),
             'method' => $this->method,
             'id' => $this->id,
         ]);
-
-        if (!empty($this->params)) {
-            $payload['params'] = $this->params;
-        }
+        $this->params and ($payload['params'] = $this->params);
 
         return json_encode($payload);
+    }
+
+    public function toArray()
+    {
+        return [
+            'jsonrpc' => $this->getVersion(),
+            'method' => $this->method,
+            'id' => $this->id,
+            'params' => $this->params
+        ];
     }
 }
