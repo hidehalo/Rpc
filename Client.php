@@ -1,63 +1,19 @@
 <?php
-namespace JsonRPC\Client;
 
-use JsonRPC\Request\RequestBuilder;
-use JsonRPC\Protocols\Json as JsonProtocol;
-use Comn\Pool\ConnectionsPool;
-use \Exception;
+namespace JsonRpc;
 
-class RpcClient
+class Client
 {
-    /**
-     * 发送数据和接收数据的超时时间  单位S
-     * @var integer
-     */
     const TIME_OUT = 30;
     
-    /**
-     * 异步调用发送数据前缀
-     * @var string
-     */
-    const ASYNC_SEND_PREFIX = 'asend_';
-    
-    /**
-     * 异步调用接收数据
-     * @var string
-     */
-    const ASYNC_RECV_PREFIX = 'arecv_';
-
-    const SERVER_LIST = CONFIG.'/jsonrpc/address.php';
-
-    const SERVICE_LIST = COMN.'/jsonrpc/service.php';
-    
-    /**
-     * 服务端地址
-     * @var array
-     */
     protected static $addressArray = array();
     
-    /**
-     * 异步调用实例
-     * @var string
-     */
     protected static $asyncInstances = array();
-    
-    /**
-     * 同步调用实例
-     * @var string
-     */
+
     protected static $instances = array();
     
-    /**
-     * 到服务端的socket连接
-     * @var resource
-     */
     protected  $connection = null;
-    
-    /**
-     * 实例的服务名
-     * @var string
-     */
+
     protected $serviceName = '';
     
     /**
