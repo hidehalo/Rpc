@@ -1,4 +1,5 @@
 <?php
+
 namespace JsonRpc\Protocol;
 
 use SplQueue;
@@ -6,26 +7,29 @@ use SplQueue;
 class BatchRequest
 {
     private $buffer;
+    private $queue;
 
-    public function __consturct()
+    public function __construct()
     {
-        $this->queue = new SPlQueue();
-        $this->buffer = '';
+        $this->queue = new SplQueue();
+        $this->buffer = [];
     }
 
     public function __call($method, $params)
     {
         $req = new Request($method, $params);
         $this->queue->enqueue($req);
+
+        return $this;
     }
 
     public function build()
     {
         $reqs = $this->queue;
         foreach ($reqs as $req) {
-            $this->buffer .= (string) $req;
+            $this->buffer[] = $req->toArray();
         }
-        $payload = $this->buffer;
+        $payload = json_encode($this->buffer);
 
         return $payload;
     }
