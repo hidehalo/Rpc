@@ -1,6 +1,6 @@
 <?php
 
-namespace JsonRpc\Test;
+namespace Hidehalo\JsonRpc\Test\Protocol;
 
 use PHPUnit\Framework\TestCase;
 use JsonRpc\Protocol\BatchRequest;
@@ -8,7 +8,7 @@ use JsonRpc\Protocol\BatchRequest;
 class BatchRequestTest extends TestCase
 {
     /** 
-     * @group testing
+     * @group failed
      * @dataProvider batchReqsProvider
      */
     public function testMagicCall(BatchRequest $batchReqs)
@@ -18,7 +18,7 @@ class BatchRequestTest extends TestCase
     }
 
     /** 
-     * @group testing
+     * @group failed
      * @dataProvider batchReqsProvider
      */
     public function testBuild(BatchRequest $batchReqs)

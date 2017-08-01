@@ -1,5 +1,5 @@
 <?php
-namespace JsonRpc\Protocol\Reply;
+namespace Hidehalo\JsonRpc\Protocol\Reply;
 
 use JsonRpc\Protocl\MessageInterface;
 

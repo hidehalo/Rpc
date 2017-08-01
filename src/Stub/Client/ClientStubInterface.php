@@ -1,6 +1,6 @@
 <?php
 
-namespace Stub\Client\ClientStubInterface;
+namespace Hidehalo\JsonRpc\Stub\Client\ClientStubInterface;
 
 interface ClientStubInterface
 {

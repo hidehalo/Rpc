@@ -16,8 +16,8 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "JsonRpc\\": "src",
-            "JsonRpc\\Test\\": "tests"
+            "Hidehalo\\JsonRpc\\": "src",
+            "Hidehalo\\JsonRpc\\Test\\": "tests"
         }
     },
     "require": {}

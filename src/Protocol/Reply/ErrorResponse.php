@@ -1,7 +1,8 @@
 <?php
-namespace JsonRpc\Protocol\Reply;
+namespace Hidehalo\JsonRpc\Protocol\Reply;
 
 use \Exception;
+use Hidehalo\JsonRpc\Protocol\MessageInterface;
 
 class ErrorResponse extends Exception implements MessageInterface
 {

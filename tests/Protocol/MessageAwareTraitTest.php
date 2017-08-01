@@ -1,23 +1,43 @@
 <?php
 
-namespace JsonRpc\Test;
+namespace Hidehalo\JsonRpc\Test\Protocol;
 
+use Hidehalo\JsonRpc\Protocol\MessageInterface;
 use PHPUnit\Framework\TestCase;
 
 class MessageAwareTraitTest extends TestCase
 {
-    public function testGetId()
+    /**
+     * @group testing
+     * @dataProvider msgProvider
+     * @param MessageInterface $message
+     */
+    public function testWithIdAndGetId(MessageInterface $message)
     {
-    
+        new MessageStub();
+        $id = uniqid();
+        $message->withId($id);
+        $this->assertSame($id, $message->getId());
     }
 
-    public function testWithId($id)
+    /**
+     * @group testing
+     * @dataProvider msgProvider
+     * @param MessageInterface $message
+     */
+    public function testGetVersion(MessageInterface $message)
     {
-    
+       $this->assertSame('2.0', $message->getVersion());
     }
 
-    public function testGetVersion()
+    /**
+     * @dataProvider msgProvider
+     * @return array
+     */
+    public function msgProvider()
     {
-       
+        return [
+            [new MessageStub()],
+        ];
     }
 }

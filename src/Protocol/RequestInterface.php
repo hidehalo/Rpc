@@ -1,5 +1,5 @@
 <?php
-namespace JsonRpc\Protocol;
+namespace Hidehalo\JsonRpc\Protocol;
 
 interface RequestInterface extends MessageInterface
 {

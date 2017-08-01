@@ -1,11 +1,11 @@
 <?php
-namespace JsonRpc\Protocol;
+namespace Hidehalo\JsonRpc\Protocol;
 
-use JsonRpc\Protocol\Reply\Response;
+use Hidehalo\JsonRpc\Protocol\Reply\Response;
 
-class JsonRpc
+class Json
 {
-    public function __consturct()
+    public function __construct()
     {
         
     }
@@ -28,7 +28,7 @@ class JsonRpc
     {
         $payload = json_decode($data);
 
-        return new Request($payload->method, $payload->params, $payload->extras);
+        return new Request($payload->method, $payload->params, isset($payload->extras) ? $payload->extras : []);
     }
 
     public function parseResponse($data)

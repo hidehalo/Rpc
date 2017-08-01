@@ -1,6 +1,8 @@
 <?php
 
-namespace JsonRpc\Protocol\Reply;
+namespace Hidehalo\JsonRpc\Protocol\Reply;
+
+use Hidehalo\JsonRpc\Protocol\MessageAwareTrait;
 
 trait RepAwareTrait
 {

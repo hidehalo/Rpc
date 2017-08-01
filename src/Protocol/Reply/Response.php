@@ -1,17 +1,19 @@
 <?php
-namespace JsonRpc\Protocol\Reply;
+namespace Hidehalo\JsonRpc\Protocol\Reply;
+
+use Hidehalo\JsonRpc\Protocol\MessageInterface;
 
 class Response implements MessageInterface
 {
     use RepAwareTrait;
     
     private $error;
+    private $id;
 
     public function __construct($id, $result)
     {
         $this->id = $id;
         $this->result = $result;
-        $this->error = $error;
     }
 
     public function getId()
@@ -24,14 +26,23 @@ class Response implements MessageInterface
         return $this->result;
     }
 
+    public function toArray()
+    {
+        return [
+            'jsonrpc' => $this->getVersion(),
+            'id' => $this->getId(),
+            'result' => $this->getResult(),
+        ];
+    }
+
 
     public function __toString()
     {
-        $options = JSON_NUMERIC_CHECK|JSON_HEX_QUOT|JSON_HEX_APOS|JSON_HEX_TAG|JSON_HEX_AMP;
+        $options = JSON_HEX_QUOT|JSON_HEX_TAG;
         $message = [
+            'jsonrpc' => '2.0',
             'id' => $this->id?:null,
-            'result' => $this->$result,
-            'jsonrpc' => '2.0'
+            'result' => $this->result,
         ];
         $this->error and ($message['error'] = $this->error);
         $payload = json_encode($message, $options);

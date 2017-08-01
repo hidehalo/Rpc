@@ -1,6 +1,6 @@
 <?php
 
-namespace JsonRpc\Test;
+namespace Hidehalo\JsonRpc\Test\Protocol;
 
 use PHPUnit\Framework\TestCase;
 

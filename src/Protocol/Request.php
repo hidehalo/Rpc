@@ -1,5 +1,5 @@
 <?php
-namespace JsonRpc\Protocol;
+namespace Hidehalo\JsonRpc\Protocol;
 
 class Request implements RequestInterface
 {
@@ -19,6 +19,21 @@ class Request implements RequestInterface
         $this->extras = $extras;
     }
 
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    public function getExtras()
+    {
+        return $this->extras;
+    }
+
     public function withMethod($method)
     {
         $this->method = $method;
@@ -28,7 +43,7 @@ class Request implements RequestInterface
 
     public function withParams($params)
     {
-        $this->param = $params;
+        $this->params = $params;
 
         return $this;
     }
@@ -42,12 +57,13 @@ class Request implements RequestInterface
 
     public function __toString()
     {
-        $payload = array_merge_recursive($this->extras, [
+        $payload = [
             'jsonrpc' => $this->getVersion(),
-            'method' => $this->method,
             'id' => $this->id,
-        ]);
+            'method' => $this->method,
+        ];
         $this->params and ($payload['params'] = $this->params);
+        $this->extras and ($payload['extras'] = $this->extras);
 
         return json_encode($payload);
     }
@@ -56,9 +72,10 @@ class Request implements RequestInterface
     {
         return [
             'jsonrpc' => $this->getVersion(),
-            'method' => $this->method,
             'id' => $this->id,
-            'params' => $this->params
+            'method' => $this->method,
+            'params' => $this->params,
+            'extras' => $this->extras,
         ];
     }
 }
