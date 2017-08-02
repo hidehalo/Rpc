@@ -3,12 +3,18 @@
 namespace Hidehalo\JsonRpc;
 
 use Hidehalo\JsonRpc\Connection;
+use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
 class ClientStub
 {
     private $rf;
     private $service;
 
+    /**
+     * @coverageIgnored
+     * @param $service
+     * @param \Hidehalo\JsonRpc\Connection $connection
+     */
     public function __construct($service, Connection $connection)
     {
         $this->rf = new \ReflectionClass($service);
@@ -32,6 +38,11 @@ class ClientStub
         return $payload;
     }
 
+    function batch()
+    {
+        return new BatchRequest($this->conn);
+    }
+
     function __call($name, $arguments)
     {
         $payload = $this->procedure($name, $arguments);
@@ -39,6 +50,4 @@ class ClientStub
 
         return $this->conn->read();
     }
-
-
 }

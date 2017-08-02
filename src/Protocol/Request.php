@@ -11,7 +11,13 @@ class Request implements RequestInterface
 
     private $extras;
 
-    public function __construct($method, $params, $extras = [])
+    /**
+     * @codeCoverageIgnore
+     * @param $method
+     * @param $params
+     * @param array $extras
+     */
+    public function __construct($method = null, $params = [], $extras = [])
     {
         $this->id = uniqid(mt_rand(111,999));
         $this->method = $method;        
@@ -57,25 +63,21 @@ class Request implements RequestInterface
 
     public function __toString()
     {
-        $payload = [
-            'jsonrpc' => $this->getVersion(),
-            'id' => $this->id,
-            'method' => $this->method,
-        ];
-        $this->params and ($payload['params'] = $this->params);
-        $this->extras and ($payload['extras'] = $this->extras);
+        $payload = json_encode($this->toArray());
 
-        return json_encode($payload);
+        return $payload;
     }
 
     public function toArray()
     {
-        return [
+        $asArray = [
             'jsonrpc' => $this->getVersion(),
             'id' => $this->id,
-            'method' => $this->method,
-            'params' => $this->params,
-            'extras' => $this->extras,
         ];
+        $this->params and ($asArray['method'] = $this->method);
+        $this->params and ($asArray['params'] = $this->params);
+        $this->extras and ($asArray['extras'] = $this->extras);
+
+        return $asArray;
     }
 }

@@ -2,14 +2,10 @@
 namespace Hidehalo\JsonRpc\Protocol;
 
 use Hidehalo\JsonRpc\Protocol\Reply\Response;
-
+//TODO: implements ProtocolInterface
 class Json
 {
-    public function __construct()
-    {
-        
-    }
-
+    //TODO: remove it and add encode method
     public function buildResponse($id, $result)
     {
         $rep = new Response($id, $result);
@@ -17,9 +13,10 @@ class Json
         return (string) $rep;
     }
 
-    public function buildRequest($method, $params)
+    //TODO: remove it and add decode method
+    public function buildRequest($method, $params, $extras = [])
     {
-        $req = new Request($method, $params);
+        $req = new Request($method, $params, $extras);
 
         return (string) $req;
     }
@@ -38,8 +35,33 @@ class Json
         return new Response($payload->id, $payload->result);
     }
 
-    public function pipe()
+    public function parseBatchRequests($data)
     {
-        return new BatchRequest();
+        $payloads = json_decode($data);
+        foreach ($payloads as $payload) {
+            //TODO: switch(type) {
+            //case :error
+            //case :notify
+            //case :response
+            //default:
+            //}
+        }
+
+        return $data;
+    }
+
+    public function parseBatchResponses($data)
+    {
+        $payloads = json_decode($data);
+        foreach ($payloads as $payload) {
+            //TODO: switch(type) {
+            //case :error
+            //case :notify
+            //case :response
+            //default:
+            //}
+        }
+
+        return $data;
     }
 }

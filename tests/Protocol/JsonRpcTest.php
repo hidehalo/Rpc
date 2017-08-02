@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class JsonRpcTest extends TestCase
 {
     /**
-     * @group testing
+     * @group passed
      * @dataProvider protoProvider
      * @param Json $json
      */
@@ -21,7 +21,7 @@ class JsonRpcTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider protoProvider
      * @param Json $json
      */

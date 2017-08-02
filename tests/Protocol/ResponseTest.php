@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class ResponseTest extends TestCase
 {
     /**
-     * @group testing
+     * @group passed
      * @dataProvider repProvider
      * @param Response $rep
      * @param $ret
@@ -19,7 +19,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider repProvider
      * @param Response $rep
      * @param $ret
@@ -36,7 +36,7 @@ class ResponseTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider repProvider
      * @param Response $rep
      * @param $ret
@@ -48,6 +48,9 @@ class ResponseTest extends TestCase
         $this->assertSame($repAsArray['result'], $ret);
     }
 
+    /**
+     * @return array
+     */
     public function repProvider()
     {
         $id = uniqid();

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class MessageAwareTraitTest extends TestCase
 {
     /**
-     * @group testing
+     * @group passed
      * @dataProvider msgProvider
      * @param MessageInterface $message
      */
@@ -21,7 +21,7 @@ class MessageAwareTraitTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider msgProvider
      * @param MessageInterface $message
      */

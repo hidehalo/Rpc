@@ -2,46 +2,50 @@
 
 namespace Hidehalo\JsonRpc\Test\Protocol;
 
+use Hidehalo\JsonRpc\Connection;
 use PHPUnit\Framework\TestCase;
-use JsonRpc\Protocol\BatchRequest;
+use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
 class BatchRequestTest extends TestCase
 {
-    /** 
-     * @group failed
-     * @dataProvider batchReqsProvider
+    /**
+     * @group passed
+     * @dataProvider batchReqProvider
+     * @param BatchRequest $batchReq
+     * @param resource $server
      */
-    public function testMagicCall(BatchRequest $batchReqs)
+    public function testMagicCallAndExec(BatchRequest $batchReq, $server)
     {
-        $pipe = $batchReqs->hello('world');
-        $this->assertInstanceOf(BatchRequest::class, $pipe);
+        $batchReq->test1(1,2,3)->test2(4,5,6)->test3(7,8,9)->execute();
+        $sock = stream_socket_accept($server);
+        $msg = fread($sock, 1024);
+        $this->assertNotNull($msg);
     }
 
-    /** 
-     * @group failed
-     * @dataProvider batchReqsProvider
+    /**
+     * @return array
      */
-    public function testBuild(BatchRequest $batchReqs)
+    public function batchReqProvider()
     {
-        $payloads = $batchReqs->hello('world')->build();
-        $payloads['id'] = null;
-        $this->assertEquals([
-            'id' => null,
-            'method' => 'hello',
-            'params' => ['world'],
-            'jsonrpc' => '2.0'
-        ], $payloads);
-    }
+        $endpoint = 'tcp://127.0.0.1:3'.mt_rand(1111, 9999);
+        $bitmask = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN;
+        $context['socket'] = [
+            'bindto' => $endpoint,
+        ];
+        $context = stream_context_create($context);
+        $server = stream_socket_server($endpoint, $errno, $errstr, $bitmask, $context);
 
-    public function batchReqsProvider()
-    {
         return [
-            [ $this->createBatchReqs() ]
+            [ $this->createBatchReq($endpoint), $server]
         ];
     }
 
-    public function createBatchReqs()
+    /**
+     * @param $endpoint
+     * @return BatchRequest
+     */
+    private function createBatchReq($endpoint)
     {
-        return new BatchRequest();
+        return new BatchRequest(new Connection($endpoint));
     }
 }

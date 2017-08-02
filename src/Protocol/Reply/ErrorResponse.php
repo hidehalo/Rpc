@@ -10,9 +10,16 @@ class ErrorResponse extends Exception implements MessageInterface
     
     private $data;
 
-    public function __consturct($message, $code, array $data = [])
+    /**
+     * @codeCoverageIgnore
+     * @param string $message
+     * @param int $code
+     * @param null $prev
+     * @param $data
+     */
+    public function __construct($message, $code, $prev = null, $data)
     {
-        parent::__consturct($message, $code);
+        parent::__construct($message, $code, $prev);
         $this->data = $data;
     }
 
@@ -23,16 +30,8 @@ class ErrorResponse extends Exception implements MessageInterface
 
     public function __toString()
     {
-        $message = [
-            'id' => null,
-            'jsonrpc' => '2.0',
-            'error' => [
-                'code' => $this->getCode(),
-                'message' => $this->getMessage()
-            ]
-        ];
-        $data and ($message['error']['data'] = $data);
-        $options = JSON_NUMERIC_CHECK|JSON_HEX_QUOT|JSON_HEX_APOS|JSON_HEX_TAG|JSON_HEX_AMP;        
+        $message = $this->toArray();
+        $options = JSON_HEX_QUOT|JSON_HEX_TAG;
         $payload = json_encode($message, $options);
 
         return $payload;   
@@ -40,6 +39,16 @@ class ErrorResponse extends Exception implements MessageInterface
 
     public function toArray()
     {
+        $asArray = [
+            'jsonrpc' => '2.0',
+            'id' => null,
+            'error' => [
+                'code' => $this->getCode(),
+                'message' => $this->getMessage(),
+            ]
+        ];
+        !is_null($this->data) and ($asArray['error']['data'] = $this->data);
 
+        return $asArray;
     }
 }

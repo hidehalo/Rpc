@@ -2,22 +2,78 @@
 
 namespace Hidehalo\JsonRpc\Test\Protocol;
 
+use Hidehalo\JsonRpc\Protocol\Reply\ErrorResponse;
 use PHPUnit\Framework\TestCase;
 
-class ErrorResponsetTest extends TestCase
+class ErrorResponseTest extends TestCase
 {
-    public function testToString()
+    /**
+     * @group passed
+     * @dataProvider errorRespProvider
+     * @param ErrorResponse $errorResponse
+     * @param $msg
+     * @param $code
+     * @param $data
+     */
+    public function testToString(ErrorResponse $errorResponse, $msg, $code, $data)
     {
-
+        $excepted = json_encode([
+            'jsonrpc' => '2.0',
+            'id' => null,
+            'error' => [
+                'code' => $code,
+                'message' => $msg,
+                'data' => $data,
+            ],
+        ]);
+        $this->assertSame($excepted, (string) $errorResponse);
     }
 
-    public function testToArray()
+    /**
+     * @group passed
+     * @dataProvider errorRespProvider
+     * @param ErrorResponse $errorResponse
+     * @param $msg
+     * @param $code
+     * @param $data
+     */
+    public function testToArray(ErrorResponse $errorResponse, $msg, $code, $data)
     {
-
+        $excepted = [
+            'jsonrpc' => '2.0',
+            'id' => null,
+            'error' => [
+                'code' => $code,
+                'message' => $msg,
+                'data' => $data,
+            ],
+        ];
+        $this->assertSame($excepted, $errorResponse->toArray());
     }
 
-    public function testGetData()
+    /**
+     * @group passed
+     * @dataProvider errorRespProvider
+     * @param ErrorResponse $errorResponse
+     * @param $msg
+     * @param $code
+     * @param $data
+     */
+    public function testGetData(ErrorResponse $errorResponse, $msg, $code, $data)
     {
-        
+        $this->assertSame($data, $errorResponse->getData());
+    }
+
+    /**
+     * @return array
+     */
+    public function errorRespProvider()
+    {
+        $msg = 'test_error_msg';
+        $code = 1000;
+        $data = false;
+        return [
+            [ new ErrorResponse($msg, $code, null, $data), $msg, $code, $data],
+        ];
     }
 }

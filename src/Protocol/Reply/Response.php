@@ -10,22 +10,20 @@ class Response implements MessageInterface
     private $error;
     private $id;
 
+    /**
+     * @codeCoverageIgnore
+     * @param $id
+     * @param $result
+     */
     public function __construct($id, $result)
     {
         $this->id = $id;
         $this->result = $result;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getResult()
-    {
-        return $this->result;
-    }
-
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return [
@@ -35,7 +33,9 @@ class Response implements MessageInterface
         ];
     }
 
-
+    /**
+     * @return string
+     */
     public function __toString()
     {
         $options = JSON_HEX_QUOT|JSON_HEX_TAG;

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class RequestTest extends TestCase
 {
     /**
-     * @group testing
+     * @group passed
      * @dataProvider reqProvider
      * @param Request $req
      */
@@ -20,7 +20,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider reqProvider
      * @param Request $req
      */
@@ -32,7 +32,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider reqProvider
      * @param Request $req
      */
@@ -44,7 +44,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider reqProvider
      * @param Request $req
      */
@@ -68,7 +68,7 @@ class RequestTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider reqProvider
      * @param Request $req
      */

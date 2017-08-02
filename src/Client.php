@@ -7,6 +7,7 @@ use Hidehalo\JsonRpc\Connection;
 class Client
 {
     /**
+     * @coverageIgnored
      * @param $gateway
      * @param $registerPath
      */
@@ -22,16 +23,5 @@ class Client
     public function getStub($name)
     {
         return new ClientStub($name, new Connection($this->gateway));
-    }
-
-    /**
-     * @return string
-     */
-    public function testConn()
-    {
-        $conn = new Connection($this->gateway);
-        $conn->write('hello');
-
-        return $conn->read();
     }
 }
