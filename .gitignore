@@ -3,4 +3,4 @@ composer.lock
 .DS_Store/
 vendor/
 build/
-.idea/*
+.idea/
