@@ -13,12 +13,13 @@
             "email": "tianchen_cc@yeah.net"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Hidehalo\\JsonRpc\\": "src",
             "Hidehalo\\JsonRpc\\Test\\": "tests"
         }
     },
-    "require": {}
+    "require": {
+        "nikic/php-parser": "^3.1"
+    }
 }

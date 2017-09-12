@@ -2,7 +2,7 @@
 
 namespace Hidehalo\JsonRpc;
 
-class ClientConnector
+class Connector
 {
     
 }
