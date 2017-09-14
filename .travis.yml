@@ -33,5 +33,3 @@ after_script:
       wget https://scrutinizer-ci.com/ocular.phar
       php ocular.phar code-coverage:upload --format=php-clover coverage.clover
     fi
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
