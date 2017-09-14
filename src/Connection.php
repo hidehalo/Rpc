@@ -19,6 +19,7 @@ class Connection
      */
     public function __construct($endpoint)
     {
+        //TODO: depart it to connector
         $stream = stream_socket_client($endpoint, $err_no, $err_msg);
         stream_set_read_buffer($stream, $this->defaultBufferSize);
         stream_set_blocking($stream, false);
@@ -64,6 +65,7 @@ class Connection
      */
     public function close()
     {
+        //TODO: depart it to connector
         //@codeCoverageIgnoreStart
         if ($this->closed) {
             return false;

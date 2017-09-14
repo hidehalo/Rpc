@@ -1,53 +1,44 @@
 <?php
-
 namespace Hidehalo\JsonRpc;
 
 use Hidehalo\JsonRpc\Connection;
+use Hidehalo\JsonRpc\Protocol\Request;
 use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
-class ClientStub
+class ClientStub implements StubInterface
 {
-    private $rf;
     private $service;
 
     /**
      * @coverageIgnored
      * @param $service
-     * @param \Hidehalo\JsonRpc\Connection $connection
+     * @param Connection $connection
      */
     public function __construct($service, Connection $connection)
     {
-        $this->rf = new \ReflectionClass($service);
         $this->service = $service;
         $this->conn = $connection;
     }
 
-    function procedure($name, $arguments)
+    public function procedure($method, array $params = [])
     {
-        $refParams  = $this->rf->getMethod($name)->getParameters();
-        foreach ($refParams as $i => $param) {
-            if ($param->isArray() and !is_array($arguments[$i])) {
-                throw new \Exception(sprintf("parameter #%d %s need array", $i, $param->getName()));
-            } elseif (!$param->isOptional() and !isset($arguments[$i])) {
-                throw new \Exception(sprintf("parameter #%d %s is required", $i, $param->getName()));
-            }
-        }
+        //TODO: 1. build request 2. return payload
+        $request = new Request($method, $params, ['service' => $this->service]);
 
-        $payload = '';
-
-        return $payload;
+        return (string) $request;
     }
 
-    function batch()
+    public function batch()
     {
         return new BatchRequest($this->conn);
     }
 
-    function __call($name, $arguments)
+    public function __call($name, $arguments = [])
     {
-        $payload = $this->procedure($name, $arguments);
-        $this->conn->write($payload);
+        $reqpayload = $this->procedure($name, $arguments);
+        $this->conn->write($reqPayload);
+        $resPayload = $this->conn->read();
 
-        return $this->conn->read();
+        return JSON::parseResponse($reqPayload);
     }
 }

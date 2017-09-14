@@ -1,5 +1,4 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
 use Hidehalo\JsonRpc\Protocol\MessageAwareTrait;
