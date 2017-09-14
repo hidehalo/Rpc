@@ -17,16 +17,26 @@ class Json
 
     public static function parseRequest($data)
     {
-        $payload = json_decode($data);
+        $payload = self::decode($data);
 
         return new Request($payload->method, $payload->params, isset($payload->extras) ? $payload->extras : []);
     }
 
     public static function parseResponse($data)
     {
-        $payload = json_decode($data);
+        $payload = self::decode($data);
 
         return new Response($payload->id, $payload->result);
+    }
+
+    public static function encode($payload)
+    {
+        return json_encode($payload);
+    }
+
+    public static function decode($payload)
+    {
+        return json_decode($payload);
     }
 
     public static function parseBatchRequests($data)
