@@ -5,6 +5,16 @@ use Hidehalo\JsonRpc\Protocol\Reply\Response;
 //TODO: implements ProtocolInterface
 class Json
 {
+    public static function buildRequest($method = null, $params = [], $extras = [])
+    {
+        return new Request($method, $params, $extras);
+    }
+
+    public static function buildResponse($id = null, $result = null)
+    {
+        return new Response($id, $result);
+    }
+
     public static function parseRequest($data)
     {
         $payload = json_decode($data);

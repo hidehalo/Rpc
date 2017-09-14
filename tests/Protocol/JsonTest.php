@@ -5,7 +5,7 @@ namespace Hidehalo\JsonRpc\Test\Protocol;
 use Hidehalo\JsonRpc\Protocol\Json;
 use PHPUnit\Framework\TestCase;
 
-class JsonRpcTest extends TestCase
+class JsonTest extends TestCase
 {
     /**
      * @group passed
