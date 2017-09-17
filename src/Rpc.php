@@ -2,15 +2,10 @@
 
 namespace Hidehalo\JsonRpc;
 
-class Rpc
+class RPC
 {
     private static $gateway;
     private static $isBooted;
-
-    public static function getResult()
-    {
-
-    }
 
     public static function getClientStub($s = "service@domain")
     {
@@ -24,8 +19,9 @@ class Rpc
         return $router->handle($payload);
     }
 
-    public static function boot(GatewatInterface $gateway)
+    public static function listen(GatewayInterface $gateway)
     {
+        //TODO: provider a sock listener ...
         self::$gateway = $gateway;
         self::$isBooted = true;
 

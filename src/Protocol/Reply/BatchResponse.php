@@ -1,5 +1,4 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
 use Hidehalo\JsonRpc\Protocol\Json;
@@ -13,7 +12,7 @@ class BatchResponse
      * @codeCoverageIgnore
      * @param string $replies
      */
-    public function __construct($replies,Json $protocol)
+    public function __construct($replies, Json $protocol)
     {
         $this->replies = $protocol->parseBatchResponses($replies);
     }
@@ -25,8 +24,8 @@ class BatchResponse
     {
 
         $asArray = $this->toArray();
-        //TODO: replace json_encode to Json::encode();
-        return \Hidehalo\JsonRpc\Helper\json_encode();
+       
+        return Json::encode($asArray);
     }
 
     /**

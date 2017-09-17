@@ -1,7 +1,7 @@
 <?php
 namespace Hidehalo\JsonRpc\Stub;
 
-class ServerStub
+class ServerStub implements StubInterface
 {
     
 }

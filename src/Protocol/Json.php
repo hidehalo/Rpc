@@ -5,37 +5,41 @@ use Hidehalo\JsonRpc\Protocol\Reply\Response;
 //TODO: implements ProtocolInterface
 class Json
 {
-    //TODO: remove it and add encode method
-    public function buildResponse($id, $result)
+    public static function buildRequest($method = null, $params = [], $extras = [])
     {
-        $rep = new Response($id, $result);
-
-        return (string) $rep;
+        return new Request($method, $params, $extras);
     }
 
-    //TODO: remove it and add decode method
-    public function buildRequest($method, $params, $extras = [])
+    public static function buildResponse($id = null, $result = null)
     {
-        $req = new Request($method, $params, $extras);
-
-        return (string) $req;
+        return new Response($id, $result);
     }
 
-    public function parseRequest($data)
+    public static function parseRequest($data)
     {
-        $payload = json_decode($data);
+        $payload = self::decode($data);
 
         return new Request($payload->method, $payload->params, isset($payload->extras) ? $payload->extras : []);
     }
 
-    public function parseResponse($data)
+    public static function parseResponse($data)
     {
-        $payload = json_decode($data);
+        $payload = self::decode($data);
 
         return new Response($payload->id, $payload->result);
     }
 
-    public function parseBatchRequests($data)
+    public static function encode($payload)
+    {
+        return json_encode($payload);
+    }
+
+    public static function decode($payload)
+    {
+        return json_decode($payload);
+    }
+
+    public static function parseBatchRequests($data)
     {
         $payloads = json_decode($data);
         foreach ($payloads as $payload) {
@@ -50,7 +54,7 @@ class Json
         return $data;
     }
 
-    public function parseBatchResponses($data)
+    public static function parseBatchResponses($data)
     {
         $payloads = json_decode($data);
         foreach ($payloads as $payload) {

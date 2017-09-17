@@ -2,10 +2,6 @@
     "name": "hidehalo/json-rpc",
     "description": "Implements of JSON-RPC 2.0 protocol and client/server stubs",
     "type": "library",
-    "require-dev": {
-        "phpunit/phpunit": "^6.2",
-        "fzaninotto/faker": "^1.6"
-    },
     "license": "GNUv3",
     "authors": [
         {
@@ -15,11 +11,23 @@
     ],
     "autoload": {
         "psr-4": {
-            "Hidehalo\\JsonRpc\\": "src",
+            "Hidehalo\\JsonRpc\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Hidehalo\\JsonRpc\\Test\\": "tests"
         }
     },
     "require": {
-        "nikic/php-parser": "^3.1"
+        "nikic/php-parser": "^3.1",
+        "hidehalo/util": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">5.4",
+        "fzaninotto/faker": "^1.6"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
