@@ -28,6 +28,6 @@
         "fzaninotto/faker": "^1.6"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "vendor\\bin\\phpunit --coverage-text"
     }
 }
