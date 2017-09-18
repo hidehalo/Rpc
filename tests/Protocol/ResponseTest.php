@@ -60,4 +60,30 @@ class ResponseTest extends TestCase
             [new Response($id, $ret), $ret]
         ];
     }
+
+    /**
+    * @group testing
+    * @dataProvider resAttrProvider
+    */
+    public function testCreate(array $attributes)
+    {
+        $res = Response::create($attributes);
+        $this->assertInstanceOf(Response::class, $res);
+        $id = $res->getId();
+        $this->assertEquals($attributes['id'], $id);
+        $ret = $res->getResult();
+        $this->assertEquals($attributes['result'], $ret);
+    }
+
+    public function resAttrProvider()
+    {
+        return [
+            [
+                [
+                    'id' => uniqid(),
+                    'result' => 'ok',
+                ]
+            ]
+        ];
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
-use JsonRpc\Protocl\MessageInterface;
+use Hidehalo\JsonRpc\Protocol\MessageInterface;
 
 interface ResponseInterface extends MessageInterface
 {
-        
+    public function getResult();
 }

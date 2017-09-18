@@ -1,8 +1,9 @@
 <?php
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
-use \Exception;
+use Hidehalo\JsonRpc\Protocol\Json;
 use Hidehalo\JsonRpc\Protocol\MessageInterface;
+use Exception;
 
 class ErrorResponse extends Exception implements MessageInterface
 {
@@ -31,8 +32,7 @@ class ErrorResponse extends Exception implements MessageInterface
     public function __toString()
     {
         $message = $this->toArray();
-        $options = JSON_HEX_QUOT|JSON_HEX_TAG;
-        $payload = json_encode($message, $options);
+        $payload = Json::encode($message);
 
         return $payload;   
     }

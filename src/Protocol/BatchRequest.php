@@ -4,6 +4,7 @@ namespace Hidehalo\JsonRpc\Protocol;
 
 use SplQueue;
 use Hidehalo\JsonRpc\Connection;
+use Hidehalo\JsonRpc\Protocol\Json;
 
 class BatchRequest
 {
@@ -40,6 +41,7 @@ class BatchRequest
      */
     public function execute()
     {
+        //TODO: remove
         $payload = $this->build();
         $this->conn->write($payload);
 
@@ -71,7 +73,7 @@ class BatchRequest
             $req = $this->queue->dequeue();
             $this->buffer[] = $req->toArray();
         }
-        $payload = json_encode($this->buffer);
+        $payload = Json::encode($this->buffer);
 
         return $payload;
     }

@@ -25,6 +25,13 @@ class Request implements RequestInterface
         $this->extras = $extras;
     }
 
+    public static function create(array $attributes = [])
+    {
+        extract($attributes);
+
+        return new self($method, $params, $extras);
+    }
+
     public function getMethod()
     {
         return $this->method;

@@ -23,6 +23,21 @@ class BatchRequestTest extends TestCase
     }
 
     /**
+     * @group passed
+     * @dataProvider batchReqProvider
+     * @param BatchRequest $batchReq
+     * @param resource $server
+     */
+    public function testGetIds(BatchRequest $batchReq, $server)
+    {
+        $batchReq->test1(1,2,3)->test2(4,5,6)->test3(7,8,9);
+        $ids = $batchReq->getIds();
+        foreach ($ids as $id) {
+            $this->assertNotNull($id);
+        }
+    }
+
+    /**
      * @return array
      */
     public function batchReqProvider()

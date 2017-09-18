@@ -92,6 +92,39 @@ class RequestTest extends TestCase
     }
 
     /**
+    * @group testing
+    * @dataProvider reqAttrProvider
+    */
+    public function testCreate(array $attributes)
+    {
+        $req = Request::create($attributes);
+        $this->assertInstanceOf(Request::class, $req);
+        $method = $req->getMethod();
+        $this->assertEquals($attributes['method'], $method);
+        $params = $req->getParams();
+        $this->assertEquals($attributes['params'], $params);
+        $extras = $req->getExtras();
+        $this->assertEquals($attributes['extras'], $extras);
+    }
+
+    public function reqAttrProvider()
+    {
+        return [
+            [
+                [
+                    'method' => 'test',
+                    'params' => [
+                        'a', 'b', 'c',
+                    ],
+                    'extras' => [
+                        'd', 'e', 'f',
+                    ],
+                ]
+            ]
+        ];
+    }
+
+    /**
      * @return array
      */
     public function reqProvider()

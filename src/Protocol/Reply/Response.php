@@ -1,9 +1,10 @@
 <?php
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
+use Hidehalo\JsonRpc\Protocol\Json;
 use Hidehalo\JsonRpc\Protocol\MessageInterface;
 
-class Response implements MessageInterface
+class Response implements ResponseInterface
 {
     use RepAwareTrait;
     
@@ -19,6 +20,13 @@ class Response implements MessageInterface
     {
         $this->id = $id;
         $this->result = $result;
+    }
+
+    public static function create(array $attributes = [])
+    {
+        extract($attributes);
+
+        return new self($id, $result);
     }
 
     /**
@@ -38,14 +46,13 @@ class Response implements MessageInterface
      */
     public function __toString()
     {
-        $options = JSON_HEX_QUOT|JSON_HEX_TAG;
         $message = [
             'jsonrpc' => '2.0',
             'id' => $this->id?:null,
             'result' => $this->result,
         ];
         $this->error and ($message['error'] = $this->error);
-        $payload = json_encode($message, $options);
+        $payload = JSON::encode($message);
 
         return $payload;
     }
