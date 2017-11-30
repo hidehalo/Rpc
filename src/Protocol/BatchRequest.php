@@ -16,19 +16,15 @@ class BatchRequest
      * @codeCoverageIgnored
      * @param array $reqs
      */
-    public function __construct($reqs = [])
+    public function __construct(array $reqs = [])
     {
         $this->queue = new SplQueue();
         $this->buffer = [];
         if ($reqs) {
             foreach ($reqs as $req) {
-                extract($req->toArray());
-                $tmp = new Request($method, $params);
-                $tmp = $tmp->withId($id);
-                $this->queue->enqueue($tmp);
+                $this->queue->enqueue($req);
             }
         }
-        // $this->conn = $conn;
     }
 
     /**
@@ -50,11 +46,8 @@ class BatchRequest
      */
     public function execute()
     {
-        //TODO: remove
         $payload = $this->build();
-        // $this->conn->write($payload);
-
-        // return $this->conn->read();
+       
         return $payload;
     }
 
@@ -74,6 +67,15 @@ class BatchRequest
         return $ret;
     }
 
+    public function _notify()
+    {
+        $notification = new Request();
+        $notification = $notification->withId(null);
+        $this->queue->enqueue($notification);
+
+        return $this;
+    }
+
     public function __toString()
     {
         return $this->build();
@@ -89,6 +91,7 @@ class BatchRequest
             $this->buffer[] = $req->toArray();
         }
         $payload = Json::encode($this->buffer);
+        $this->buffer = [];
 
         return $payload;
     }

@@ -65,7 +65,6 @@ class Json
 
     public static function parseBatchRequests($data)
     {
-        //TODO: optimz
         $ret = [];
         $payloads = self::decode($data, true);
         foreach ($payloads as $payload) {
@@ -75,7 +74,7 @@ class Json
                     $ret[] = self::createRequest($payload);
                     break;
                 case self::NOTIFICATION:
-                    $ret[] = self::createNotify($payload);
+                    $ret[] = self::createNotify();
                     break;
             }
         }
@@ -112,15 +111,12 @@ class Json
         } elseif (isset($payload['result'])) {
 
             return self::SUCCESS;
-        } elseif (isset($payload['id']) && $payload['id'] === null) {
+        } elseif ($payload['id'] === null) {
 
             return self::NOTIFICATION;
-        } elseif (isset($payload['method'])) {
-            
-            return self::REQUEST;
         }
-
-        return self::UNKNOWN;
+            
+        return self::REQUEST;
     }
 
     private static function createRequest(array $attributes = [])
@@ -138,8 +134,8 @@ class Json
         return ErrorResponse::create($attributes);
     }
 
-    private static function createNotify(array $attributes = [])
+    private static function createNotify()
     {
-        return Request::create($attributes)->withId(null);
+        return Request::notify();
     }
 }

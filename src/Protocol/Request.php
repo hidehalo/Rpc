@@ -30,8 +30,16 @@ class Request implements RequestInterface
         extract($attributes);
         $req = new self();
 
-        return $req->withMethod($method)->withParams($params)
-            ->withExtras(isset($extras)? $extras : [])->withId(isset($id)? $id : null);
+        return $req->withMethod(isset($method)? $method : null)
+            ->withParams(isset($params)? $params : null)
+            ->withExtras(isset($extras)? $extras : null)->withId(isset($id)? $id : null);
+    }
+
+    public static function notify()
+    {
+        $req = new self();
+
+        return $req->withId(null);
     }
 
     public function getMethod()
@@ -83,9 +91,11 @@ class Request implements RequestInterface
             'jsonrpc' => $this->getVersion(),
             'id' => $this->id,
         ];
-        $this->params and ($asArray['method'] = $this->method);
-        $this->params and ($asArray['params'] = $this->params);
-        $this->extras and ($asArray['extras'] = $this->extras);
+        if ($this->id) {
+            $this->method and ($asArray['method'] = $this->method);
+            $this->params and ($asArray['params'] = $this->params);
+            $this->extras and ($asArray['extras'] = $this->extras);
+        }
 
         return $asArray;
     }

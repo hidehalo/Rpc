@@ -2,6 +2,7 @@
 namespace Hidehalo\JsonRpc\Protocol\Reply;
 
 use Hidehalo\JsonRpc\Protocol\Json;
+use Hidehalo\JsonRpc\Protocol\Reply\Response;
 use Hidehalo\JsonRpc\Protocol\MessageInterface;
 
 class BatchResponse
@@ -14,13 +15,14 @@ class BatchResponse
      */
     public function __construct(array $replies)
     {
-        //TODO: add replies queue
         $this->replies = $replies;
     }
 
-    public function reply($payload)
-    {
-        //TODO: impl
+    public function reply($id, $result)
+    {   
+        $this->replies[] = new Response($id, $result);
+
+        return $this;
     }
 
     /**

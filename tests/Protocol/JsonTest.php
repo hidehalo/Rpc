@@ -45,7 +45,7 @@ class JsonTest extends TestCase
     public function testBuildBatchReqAndParse(Json $json)
     {
         $payload = $json->buildBatchRequests(function ($req) {
-            return $req->test(1)->test(2)->test(3);
+            return $req->test(1)->test(2)->test(3)->_notify();
         });
         $this->assertNotNull($payload);
         $batchReq = $json->parseBatchRequests($payload);
@@ -53,7 +53,7 @@ class JsonTest extends TestCase
     }
 
     /**
-     * @group testing
+     * @group passed
      * @dataProvider protoProvider
      * @param Json $json
      */
