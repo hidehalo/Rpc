@@ -28,8 +28,10 @@ class Request implements RequestInterface
     public static function create(array $attributes = [])
     {
         extract($attributes);
+        $req = new self();
 
-        return new self($method, $params, $extras);
+        return $req->withMethod($method)->withParams($params)
+            ->withExtras(isset($extras)? $extras : [])->withId(isset($id)? $id : null);
     }
 
     public function getMethod()

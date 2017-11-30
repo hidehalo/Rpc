@@ -18,7 +18,7 @@ class ErrorResponse extends Exception implements MessageInterface
      * @param null $prev
      * @param $data
      */
-    public function __construct($message, $code, $prev = null, $data)
+    public function __construct($message = '', $code = 0, $prev = null, $data = null)
     {
         parent::__construct($message, $code, $prev);
         $this->data = $data;
@@ -50,5 +50,13 @@ class ErrorResponse extends Exception implements MessageInterface
         !is_null($this->data) and ($asArray['error']['data'] = $this->data);
 
         return $asArray;
+    }
+
+    public static function create($attributes)
+    {
+        extract($attributes);
+        extract($error);
+        
+        return new self($message, $code, null, isset($data)? $data : null);
     }
 }

@@ -99,6 +99,8 @@ class RequestTest extends TestCase
     {
         $req = Request::create($attributes);
         $this->assertInstanceOf(Request::class, $req);
+        $id = $req->getId();
+        $this->assertSame($attributes['id'], $id);
         $method = $req->getMethod();
         $this->assertEquals($attributes['method'], $method);
         $params = $req->getParams();
@@ -112,6 +114,7 @@ class RequestTest extends TestCase
         return [
             [
                 [
+                    'id' => uniqid(),
                     'method' => 'test',
                     'params' => [
                         'a', 'b', 'c',

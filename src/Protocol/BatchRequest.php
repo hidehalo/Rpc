@@ -14,13 +14,21 @@ class BatchRequest
 
     /**
      * @codeCoverageIgnored
-     * @param Connection $conn
+     * @param array $reqs
      */
-    public function __construct(Connection $conn)
+    public function __construct($reqs = [])
     {
         $this->queue = new SplQueue();
         $this->buffer = [];
-        $this->conn = $conn;
+        if ($reqs) {
+            foreach ($reqs as $req) {
+                extract($req->toArray());
+                $tmp = new Request($method, $params);
+                $tmp = $tmp->withId($id);
+                $this->queue->enqueue($tmp);
+            }
+        }
+        // $this->conn = $conn;
     }
 
     /**
@@ -37,15 +45,17 @@ class BatchRequest
     }
 
     /**
+     * TODO: Remove $this->conn->write(),it should be return payload
      * @return string
      */
     public function execute()
     {
         //TODO: remove
         $payload = $this->build();
-        $this->conn->write($payload);
+        // $this->conn->write($payload);
 
-        return $this->conn->read();
+        // return $this->conn->read();
+        return $payload;
     }
 
     /**
@@ -62,6 +72,11 @@ class BatchRequest
         }
 
         return $ret;
+    }
+
+    public function __toString()
+    {
+        return $this->build();
     }
 
     /**

@@ -10,11 +10,17 @@ class BatchResponse
 
     /**
      * @codeCoverageIgnore
-     * @param string $replies
+     * @param array $replies
      */
-    public function __construct($replies, Json $protocol)
+    public function __construct(array $replies)
     {
-        $this->replies = $protocol->parseBatchResponses($replies);
+        //TODO: add replies queue
+        $this->replies = $replies;
+    }
+
+    public function reply($payload)
+    {
+        //TODO: impl
     }
 
     /**

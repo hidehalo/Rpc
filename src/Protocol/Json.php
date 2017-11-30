@@ -2,6 +2,9 @@
 namespace Hidehalo\JsonRpc\Protocol;
 
 use Hidehalo\JsonRpc\Protocol\Reply\Response;
+use Hidehalo\JsonRpc\Protocol\Reply\ErrorResponse;
+use Hidehalo\JsonRpc\Protocol\Reply\BatchResponse;
+use Closure;
 //TODO: implements ProtocolInterface
 class Json
 {
@@ -40,44 +43,65 @@ class Json
         return json_encode($payload);
     }
 
-    public static function decode($payload)
+    public static function decode($payload, $assoc = false)
     {
-        return json_decode($payload);
+        return json_decode($payload, $assoc);
+    }
+
+    public static function buildBatchRequests(Closure $procedure)
+    {
+        $batchReq = new BatchRequest();
+        $batchReq = $procedure($batchReq);
+        
+        return $batchReq->execute();
+    }
+
+    public static function buildBatchResponses(array $replies)
+    {
+        $batchRes = new BatchResponse($replies);
+
+        return $batchRes;
     }
 
     public static function parseBatchRequests($data)
     {
-        $payloads = self::decode($data);
+        //TODO: optimz
+        $ret = [];
+        $payloads = self::decode($data, true);
         foreach ($payloads as $payload) {
             $code = self::getPayloadTypeCode($payload);
             switch ($code) {
-                case self::SUCCESS:
+                case self::REQUEST:
+                    $ret[] = self::createRequest($payload);
                     break;
-                case self::ERROR:
+                case self::NOTIFICATION:
+                    $ret[] = self::createNotify($payload);
                     break;
             }
         }
 
-        return $data;
+        return new BatchRequest($ret);
     }
 
     public static function parseBatchResponses($data)
     {
         $ret = [];
-        $payloads = self::decode($data);
+        $payloads = self::decode($data, true);
         foreach ($payloads as $payload) {
             $code = self::getPayloadTypeCode($payload);
             switch ($code) {
-                case self::NOTIFACATION:
-                    return self::createNotify($payload);
-                case self::REQUEST:
-                    return self::createRequest($payload);
+                case self::SUCCESS:
+                    $ret[] = self::createResponse($payload);
+                    break;
+                case self::ERROR:
+                    $ret[] = self::createErrResponse($payload);
+                    break;
                 default:
                     break;
             }
         }
 
-        return $data;
+        return new BatchResponse($ret);
     }
 
     private static function getPayloadTypeCode(array $payload)
@@ -109,9 +133,9 @@ class Json
         return Response::create($attributes);
     }
 
-    private static function createErrResponse(Exception $e)
+    private static function createErrResponse(array $attributes)
     {
-        return ErrorResponse::create($e);
+        return ErrorResponse::create($attributes);
     }
 
     private static function createNotify(array $attributes = [])
