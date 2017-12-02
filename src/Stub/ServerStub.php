@@ -11,5 +11,17 @@ class ServerStub implements StubInterface
      {
          $this->conn = $connection;
      }
- 
+
+     public function procedure($method, array $params)
+     {
+        return \call_user_func_array($method, $params);
+     }
+
+     /**
+      * start batch response
+      */
+     public function batch()
+     {
+        return new BatchResponse();
+     }
 }

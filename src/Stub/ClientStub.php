@@ -28,17 +28,25 @@ class ClientStub implements StubInterface
         return (string) $request;
     }
 
-    public function batch()
+    /**
+     * start batch requests
+     */
+    public function batch(Closure $closure)
     {
-        return new BatchRequest($this->conn);
+        $batch = new BatchRequest();
+        if ($closure) {
+            return $closure($batch);
+        }
+
+        return $batch;
     }
 
     public function __call($name, $arguments = [])
     {
-        $reqpayload = $this->procedure($name, $arguments);
-        $this->conn->write($reqPayload);
-        $resPayload = $this->conn->read();
+        $req = $this->procedure($name, $arguments);
+        $this->conn->write($req);
+        $res = $this->conn->read();
 
-        return JSON::parseResponse($reqPayload);
+        return JSON::parseResponse($req);
     }
 }

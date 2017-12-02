@@ -1,5 +1,6 @@
 <?php
 namespace Hidehalo\JsonRpc;
+//TODO: depart from this repo
 
 class Gateway implements GatewatInterface
 {

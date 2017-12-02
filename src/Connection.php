@@ -15,12 +15,15 @@ class Connection
 
     /**
      * @codeCoverageIgnore
-     * @param $endpoint
+     * @param $endpointOrResource
      */
-    public function __construct($endpoint)
+    public function __construct($endpointOrResource)
     {
-        //TODO: depart it to connector
-        $stream = stream_socket_client($endpoint, $err_no, $err_msg);
+        if (is_resource($endpointOrResource)) {
+            $stream = $endpointOrResource;
+        } else {
+            $stream = stream_socket_client($endpointOrResource, $err_no, $err_msg);
+        }
         stream_set_read_buffer($stream, $this->defaultBufferSize);
         stream_set_blocking($stream, false);
         $this->stream = $stream;

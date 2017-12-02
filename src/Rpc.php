@@ -1,7 +1,7 @@
 <?php
 
 namespace Hidehalo\JsonRpc;
-
+//TODO: depart from this repo
 class RPC
 {
     private static $gateway;
