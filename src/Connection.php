@@ -1,17 +1,18 @@
 <?php
-
 namespace Hidehalo\JsonRpc;
+
+use Exception;
 
 class Connection
 {
     /**
      * @var resource
      */
-    private $stream;
+    private $stream = null;
 
     private $defaultBufferSize = 2<<15 -1;
 
-    private $closed;
+    private $closed = true;
 
     /**
      * @codeCoverageIgnore
@@ -22,12 +23,18 @@ class Connection
         if (is_resource($endpointOrResource)) {
             $stream = $endpointOrResource;
         } else {
-            $stream = stream_socket_client($endpointOrResource, $err_no, $err_msg);
+            try {
+                $stream = @stream_socket_client($endpointOrResource, $err_no, $err_msg);
+            } catch (Exception $e) {
+                //TODO: handle error
+            }
         }
-        stream_set_read_buffer($stream, $this->defaultBufferSize);
-        stream_set_blocking($stream, false);
-        $this->stream = $stream;
-        $this->closed = false;
+        if ($stream != false) {
+            stream_set_read_buffer($stream, $this->defaultBufferSize);
+            stream_set_blocking($stream, false);
+            $this->stream = $stream;
+            $this->closed = false;
+        }
     }
 
     /**
@@ -70,7 +77,7 @@ class Connection
     {
         //TODO: depart it to connector
         //@codeCoverageIgnoreStart
-        if ($this->closed) {
+        if ($this->closed || !is_resource($this->stream)) {
             return false;
         }
         //@codeCoverageIgnoreEnd

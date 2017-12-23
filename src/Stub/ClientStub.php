@@ -1,11 +1,11 @@
 <?php
-namespace Hidehalo\JsonRpc;
+namespace Hidehalo\JsonRpc\Stub;
 
 use Hidehalo\JsonRpc\Connection;
 use Hidehalo\JsonRpc\Protocol\Request;
 use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
-class ClientStub implements StubInterface
+class ClientStub
 {
     private $service;
 
@@ -20,33 +20,28 @@ class ClientStub implements StubInterface
         $this->conn = $connection;
     }
 
-    public function procedure($method, array $params = [])
+    public function procedure($payload)
     {
-        //TODO: 1. build request 2. return payload
-        $request = new Request($method, $params, ['service' => $this->service]);
-
-        return (string) $request;
+        $this->conn->write($payload);
+        $res = $this->conn->read();
+        
+        return JSON::parseResponse($req);        
     }
 
     /**
      * start batch requests
      */
-    public function batch(Closure $closure)
+    public function batch()
     {
         $batch = new BatchRequest();
-        if ($closure) {
-            return $closure($batch);
-        }
 
         return $batch;
     }
 
     public function __call($name, $arguments = [])
     {
-        $req = $this->procedure($name, $arguments);
-        $this->conn->write($req);
-        $res = $this->conn->read();
+        $req = new Request($name, $arguments, ['service' => $this->service]);
 
-        return JSON::parseResponse($req);
+        return (string) $req;
     }
 }
