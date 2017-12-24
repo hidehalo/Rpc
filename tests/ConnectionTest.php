@@ -1,9 +1,8 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Test;
 
-use Hidehalo\JsonRpc\Connection;
 use PHPUnit\Framework\TestCase;
+use Hidehalo\JsonRpc\Connection;
 
 class ConnectionTest extends TestCase
 {
