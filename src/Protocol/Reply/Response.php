@@ -9,7 +9,6 @@ class Response implements ResponseInterface
     use RepAwareTrait;
     
     private $error;
-    private $id;
 
     /**
      * @codeCoverageIgnore
