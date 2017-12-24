@@ -5,5 +5,8 @@ use PHPUnit\Framework\TestCase;
 
 class ServerStubTest extends TestCase
 {
-    //TODO: impl
+    public function testNotImpl()
+    {
+        $this->markTestIncomplete();
+    }
 }

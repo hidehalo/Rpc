@@ -8,11 +8,11 @@ class BatchResponseTest extends TestCase
 {
     public function testToString()
     {
-
+        $this->markTestIncomplete();
     }
 
     public function testToArray()
     {
-        
+        $this->markTestIncomplete();
     }
 }
