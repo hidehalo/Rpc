@@ -19,13 +19,8 @@
             "Hidehalo\\JsonRpc\\Test\\": "tests"
         }
     },
-    "require": {
-    },
     "require-dev": {
         "phpunit/phpunit": ">5.4",
         "fzaninotto/faker": "^1.6"
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit --coverage-text"
     }
 }
