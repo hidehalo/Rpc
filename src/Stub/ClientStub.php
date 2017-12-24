@@ -2,6 +2,7 @@
 namespace Hidehalo\JsonRpc\Stub;
 
 use Hidehalo\JsonRpc\Connection;
+use Hidehalo\JsonRpc\Protocol\JSON;
 use Hidehalo\JsonRpc\Protocol\Request;
 use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
@@ -25,7 +26,7 @@ class ClientStub
         $this->conn->write($payload);
         $res = $this->conn->read();
         
-        return JSON::parseResponse($req);        
+        return JSON::parseResponse($res);  
     }
 
     /**

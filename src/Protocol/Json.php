@@ -34,6 +34,9 @@ class Json
     public static function parseResponse($data)
     {
         $payload = self::decode($data);
+        if ($payload) {
+            return false;
+        }
 
         return new Response($payload->id, $payload->result);
     }
