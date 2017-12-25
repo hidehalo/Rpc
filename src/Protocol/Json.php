@@ -27,12 +27,14 @@ class Json
     public static function parseRequest($payload)
     {
         $data = self::decode($payload, true);
-        $code = self::getPayloadTypeCode($data);
-        switch ($code) {
-            case self::REQUEST:
-                return self::createRequest($data);
-            case self::NOTIFICATION:
-                return self::createNotify();
+        if ($data) {
+            $code = self::getPayloadTypeCode($data);
+            switch ($code) {
+                case self::REQUEST:
+                    return self::createRequest($data);
+                case self::NOTIFICATION:
+                    return self::createNotify();
+            }
         }
 
         return false;
@@ -41,12 +43,14 @@ class Json
     public static function parseResponse($payload)
     {
         $data = self::decode($payload, true);
-        $code = self::getPayloadTypeCode($data);
-        switch ($code) {
-            case self::SUCCESS:
-                return self::createResponse($data);
-            case self::ERROR:
-                return self::createErrResponse($data);
+        if ($data) {
+            $code = self::getPayloadTypeCode($data);
+            switch ($code) {
+                case self::SUCCESS:
+                    return self::createResponse($data);
+                case self::ERROR:
+                    return self::createErrResponse($data);
+            }
         }
 
         return false;
