@@ -16,8 +16,8 @@ class ConnectionTest extends TestCase
     {
         $socket = stream_socket_accept($server, 1);
         fwrite($socket, 'hello');
-        $msg = $conn->read();
-        $conn->close();
+        fclose($socket);      
+        $msg = $conn->read(); 
         $this->assertSame($msg, 'hello');
     }
 
@@ -29,10 +29,10 @@ class ConnectionTest extends TestCase
      */
     public function testWrite(Connection $conn, $server)
     {
-        $socket = stream_socket_accept($server);
+        $socket = stream_socket_accept($server);     
         $conn->write('hello');
-        $msg = fread($socket, 1024);
         $conn->close();
+        $msg = fgets($socket);
         $this->assertSame($msg, 'hello');;
     }
 

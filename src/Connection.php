@@ -5,6 +5,7 @@ use Exception;
 
 class Connection
 {
+    const TIMEOUT = 10;
     /**
      * @var resource
      */
@@ -32,6 +33,7 @@ class Connection
         if ($stream != false) {
             stream_set_read_buffer($stream, $this->defaultBufferSize);
             stream_set_blocking($stream, true);
+            stream_set_timeout($stream, self::TIMEOUT);
             $this->stream = $stream;
             $this->closed = false;
         }

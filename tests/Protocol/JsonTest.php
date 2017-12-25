@@ -17,7 +17,7 @@ class JsonTest extends TestCase
     public function testBuildRepAndParseRep(Json $json)
     {
         $payload = $json->buildResponse(uniqid(),'hello');
-        $rep = $json->parseResponse($payload);
+        $rep = $json->parseResponse((string)$payload);
         $this->assertSame('2.0', $rep->getVersion());
         $this->assertSame('hello', $rep->getResult());
     }
@@ -30,11 +30,11 @@ class JsonTest extends TestCase
     public function testBuildReqAndParseReq(Json $json)
     {
         $payload = $json->buildRequest('test', [1,2,3]);
-        $req = $json->parseRequest($payload);
+        $req = $json->parseRequest((string)$payload);
         $this->assertSame('2.0', $req->getVersion());
         $this->assertSame('test', $req->getMethod());
         $this->assertSame([1,2,3], $req->getParams());
-        $this->assertSame([], $req->getExtras());
+        $this->assertSame(null, $req->getExtras());
     }
 
     /**

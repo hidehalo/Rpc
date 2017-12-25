@@ -24,21 +24,32 @@ class Json
         return new Response($id, $result);
     }
 
-    public static function parseRequest($data)
+    public static function parseRequest($payload)
     {
-        $payload = self::decode($data);
-
-        return new Request($payload->method, $payload->params, isset($payload->extras) ? $payload->extras : []);
-    }
-
-    public static function parseResponse($data)
-    {
-        $payload = self::decode($data);
-        if (!$payload) {
-            return false;
+        $data = self::decode($payload, true);
+        $code = self::getPayloadTypeCode($data);
+        switch ($code) {
+            case self::REQUEST:
+                return self::createRequest($data);
+            case self::NOTIFICATION:
+                return self::createNotify();
         }
 
-        return new Response($payload->id, $payload->result);
+        return false;
+    }
+
+    public static function parseResponse($payload)
+    {
+        $data = self::decode($payload, true);
+        $code = self::getPayloadTypeCode($data);
+        switch ($code) {
+            case self::SUCCESS:
+                return self::createResponse($data);
+            case self::ERROR:
+                return self::createErrResponse($data);
+        }
+
+        return false;
     }
 
     public static function encode($payload)
