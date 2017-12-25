@@ -8,7 +8,7 @@ use Hidehalo\JsonRpc\Protocol\BatchRequest;
 
 class ClientStub
 {
-    private $service;
+    protected $service;
 
     /**
      * @coverageIgnored
