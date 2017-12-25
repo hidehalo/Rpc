@@ -31,7 +31,7 @@ class Connection
         }
         if ($stream != false) {
             stream_set_read_buffer($stream, $this->defaultBufferSize);
-            stream_set_blocking($stream, false);
+            stream_set_blocking($stream, true);
             $this->stream = $stream;
             $this->closed = false;
         }
