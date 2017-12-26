@@ -34,7 +34,7 @@ class ClientStub
      */
     public function batch()
     {
-        $batch = new BatchRequest();
+        $batch = new BatchRequest([], $this->service);
 
         return $batch;
     }
