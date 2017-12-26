@@ -1,5 +1,4 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Protocol;
 
 use SplQueue;
@@ -14,8 +13,11 @@ class BatchRequest
     protected $service;
 
     /**
+     * Constructor
+     * 
      * @codeCoverageIgnored
-     * @param array $reqs
+     * @param array $reqs "Array of Request"
+     * @param string $service "Default Service"
      */
     public function __construct(array $reqs = [], $service = '')
     {

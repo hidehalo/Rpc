@@ -1,5 +1,4 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Test\Protocol;
 
 use Hidehalo\JsonRpc\Connection;
@@ -16,8 +15,6 @@ class BatchRequestTest extends TestCase
     public function testMagicCallAndExec(BatchRequest $batchReq)
     {
         $msg = $batchReq->test1(1,2,3)->test2(4,5,6)->test3(7,8,9)->execute();
-        // $sock = stream_socket_accept($server);
-        // $msg = fread($sock, 1024);
         $this->assertNotNull($msg);
     }
 
@@ -40,14 +37,6 @@ class BatchRequestTest extends TestCase
      */
     public function batchReqProvider()
     {
-        // $endpoint = 'tcp://127.0.0.1:3'.mt_rand(1111, 9999);
-        // $bitmask = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN;
-        // $context['socket'] = [
-        //     'bindto' => $endpoint,
-        // ];
-        // $context = stream_context_create($context);
-        // $server = stream_socket_server($endpoint, $errno, $errstr, $bitmask, $context);
-
         return [
             [ $this->createBatchReq()]
         ];

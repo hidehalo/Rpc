@@ -1,18 +1,47 @@
 <?php
-
 namespace Hidehalo\JsonRpc\Test\Protocol;
 
 use PHPUnit\Framework\TestCase;
+use Hidehalo\JsonRpc\Protocol\Reply\Response;
+use Hidehalo\JsonRpc\Protocol\Reply\BatchResponse;
 
 class BatchResponseTest extends TestCase
 {
-    public function testToString()
+    /**
+     * @dataProvider batchRespProvider
+     */
+    public function testToString(BatchResponse $batch)
     {
-        $this->markTestIncomplete();
+        $payload = $batch->__toString();
+        $this->assertGreaterThan(0, strlen($payload));
     }
 
-    public function testToArray()
+    /**
+     * @dataProvider batchRespProvider
+     */
+    public function testToArray(BatchResponse $batch)
     {
-        $this->markTestIncomplete();
+        $asArray = $batch->toArray();
+        $this->assertNotEmpty($asArray);
+        
+        foreach ($asArray as $arr) {
+            $this->assertArrayHasKey('jsonrpc', $arr);
+            $this->assertArrayHasKey('id', $arr);
+            $this->assertArrayHasKey('result', $arr);
+        }
+    }
+
+    public function batchRespProvider()
+    {
+        for ($i=0; $i<5; $i++) {
+            $id = uniqid($i * mt_rand(1, 5));
+            $result = 'ok';
+            $res[] = new Response($id, $result);
+        }
+        $batch = new BatchResponse($res);
+
+        return [
+            [ $batch ]
+        ];
     }
 }
