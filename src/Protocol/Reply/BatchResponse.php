@@ -42,6 +42,7 @@ class BatchResponse
     public function toArray()
     {
         $ret = [];
+        
         /**
          * @var MessageInterface $reply
          */
