@@ -11,13 +11,15 @@ class BatchRequest
     private $buffer;
     private $queue;
     private $conn;
+    protected $service;
 
     /**
      * @codeCoverageIgnored
      * @param array $reqs
      */
-    public function __construct(array $reqs = [])
+    public function __construct(array $reqs = [], $service = '')
     {
+        $this->service = $service;
         $this->queue = new SplQueue();
         $this->buffer = [];
         if ($reqs) {
@@ -34,7 +36,13 @@ class BatchRequest
      */
     public function __call($method, $params)
     {
-        $req = new Request($method, $params);
+        $extras = [];
+        if ($this->service) {
+            $extras = [
+                'service' => $this->service
+            ];
+        }
+        $req = new Request($method, $params, $extras);
         $this->queue->enqueue($req);
 
         return $this;
