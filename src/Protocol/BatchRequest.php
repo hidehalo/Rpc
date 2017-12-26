@@ -67,6 +67,11 @@ class BatchRequest
         return $ret;
     }
 
+    public function getReqs()
+    {
+        return $this->queue;
+    }
+
     public function _notify()
     {
         $notification = new Request();
