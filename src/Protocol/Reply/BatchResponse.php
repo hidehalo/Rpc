@@ -45,10 +45,12 @@ class BatchResponse
         /**
          * @var MessageInterface $reply
          */
-        if ($reply instanceof MessageInterface) {
-            $ret[] = $reply->toArray();
-        } else {
-            $ret[] = $reply;
+        foreach ($this->replies as $reply) {
+            if ($reply instanceof MessageInterface) {
+                $ret[] = $reply->toArray();
+            } else {
+                $ret[] = $reply;
+            }
         }
 
         return $ret;
