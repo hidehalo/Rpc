@@ -9,7 +9,6 @@ class BatchRequest
 {
     private $buffer;
     private $queue;
-    private $conn;
     protected $service;
 
     /**
@@ -39,7 +38,7 @@ class BatchRequest
     public function __call($method, $params)
     {
         $extras = [];
-        if ($this->service) {
+        if ($this->service != '') {
             $extras = [
                 'service' => $this->service
             ];
