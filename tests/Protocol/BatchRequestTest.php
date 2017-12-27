@@ -32,6 +32,14 @@ class BatchRequestTest extends TestCase
         }
     }
 
+    public function testDefaultService()
+    {
+        $batch = new BatchRequest([], 'TEST_SERV');
+        $payload = $batch->hello('world')->execute();
+        $ret = json_decode($payload, true);
+        $this->assertSame('TEST_SERV', $ret[0]['extras']['service']);
+    }
+
     /**
      * @return array
      */
