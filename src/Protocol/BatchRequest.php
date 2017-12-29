@@ -90,6 +90,16 @@ class BatchRequest
         return $this;
     }
 
+    /**
+     * Is requets queue empty
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return $this->queue->isEmpty();
+    }
+
     public function __toString()
     {
         return $this->build();

@@ -41,6 +41,20 @@ class BatchRequestTest extends TestCase
     }
 
     /**
+     * @group passed
+     * @dataProvider batchReqProvider
+     * @param BatchRequest $batchReq
+     */
+    public function testIsEmpty(BatchRequest $batchReq)
+    {
+        $ret1 = $batchReq->isEmpty();
+        $this->assertTrue($ret1);
+
+        $ret2 = $batchReq->hello('world')->isEmpty();
+        $this->assertFalse($ret2);
+    }
+
+    /**
      * @return array
      */
     public function batchReqProvider()
