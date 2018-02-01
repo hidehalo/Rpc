@@ -31,6 +31,19 @@ class BatchResponseTest extends TestCase
         }
     }
 
+    /**
+     * @dataProvider batchRespProvider
+     */
+    public function testIsEmpty(BatchResponse $batch)
+    {
+        $ret1 = $batch->isEmpty();
+        $this->assertFalse($ret1);
+
+        $batch2 = new BatchResponse([]);
+        $ret2 = $batch2->isEmpty();
+        $this->assertTrue($ret2);
+    }
+
     public function batchRespProvider()
     {
         for ($i=0; $i<5; $i++) {

@@ -19,21 +19,10 @@ class BatchResponse
     }
 
     public function reply($id, $result)
-    {   
+    {
         $this->replies[] = new Response($id, $result);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-
-        $asArray = $this->toArray();
-       
-        return Json::encode($asArray);
     }
 
     /**
@@ -55,5 +44,26 @@ class BatchResponse
         }
 
         return $ret;
+    }
+
+    /**
+     * Tell if no replies
+     *
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return empty($this->replies);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+
+        $asArray = $this->toArray();
+       
+        return Json::encode($asArray);
     }
 }
