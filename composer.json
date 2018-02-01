@@ -2,7 +2,7 @@
     "name": "hidehalo/json-rpc",
     "description": "Implements of JSON-RPC 2.0 protocol and client/server stubs",
     "type": "library",
-    "license": "GNUv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "hidehalo",

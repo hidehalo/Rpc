@@ -1,5 +1,5 @@
     Implements of JSON-RPC 2.0 protocol,client/server stubs
-    Copyright (C) 2017/7/12  hidehalo tianchen@g-i.asia
+    Copyright (C) 2018/2/1  hidehalo tianchen@g-i.asia
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
